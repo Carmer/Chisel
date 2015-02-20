@@ -40,6 +40,11 @@ class Chisel
         else  markdown
       end
     end
+    html_doc
+  end
+
+  def reassemble
+    locate_markdown_and_replace_with_html.join
   end
 
 end

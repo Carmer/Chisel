@@ -26,4 +26,9 @@ class TestChisel < Minitest::Test
     assert_equal ["<h1>document of many lines and more lines </h1>", "", "<p> and other lines... oooooo yeah</p>"], chisel.locate_markdown_and_replace_with_html
   end
 
+  def test_reassemble_to_html_doc
+    chisel = Chisel.new("#document of many lines and more lines \n\n and other lines... oooooo yeah")
+    assert_equal "<h1>document of many lines and more lines </h1><p> and other lines... oooooo yeah</p>", chisel.reassemble
+  end
+
 end
