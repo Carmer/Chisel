@@ -18,7 +18,7 @@ class Chisel
     @document = document.split("\n")
   end
 
-  def locate_markdown_and_replace_with_html
+  def locate_header_and_replace_with_html
     html_doc = @document.map do |markdown|
         if  markdown == ""
             markdown
@@ -40,11 +40,30 @@ class Chisel
         else  markdown
       end
     end
-    html_doc
+    html_doc #this is the array by line
   end
 
+  def formatting
+    formatted = locate_header_and_replace_with_html.to_s.split(" ").map do |text|
+      if text.include? "**"
+          tag = text.delete"**"
+          tag.gsub tag, "<strong>#{tag}</strong>"
+      elsif text.include? "*"
+          tag = text.delete"*"
+          tag.gsub tag, "<em>#{tag}</em>"
+        elsif text.include? ""
+          text.delete""
+        else
+          text
+        end
+      end
+      formatted.join(" ") #this the array by line
+    end
+
+
+
   def reassemble
-    locate_markdown_and_replace_with_html.join
+    print formatted.join("\n")
   end
 
 end
