@@ -20,8 +20,8 @@ class TestChisel < Minitest::Test
   end
 
   def test_iterate_array_and_locate_markdown_head_tag
-    chisel = Chisel.new("#text\n##text\n###text\n")
-    assert_equal ["<h1>text", "<h2>text", "<h3>text"], chisel.locate_markdown_and_replace_open_head_tag
+    chisel = Chisel.new("# text ## text ### text")
+    assert_equal ["<h1>", "text", "<h2>", "text", "<h3>", "text"], chisel.locate_markdown_and_replace_open_head_tag
   end
 
   def test_collect_close_head_tag

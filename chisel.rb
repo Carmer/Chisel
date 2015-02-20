@@ -25,23 +25,22 @@ class Chisel
 
   def locate_markdown_and_replace_open_head_tag
   html_doc =  @document.split.map do |markdown|
-      if markdown.start_with?("####")
-          tag = markdown.split("")
-          tag[0..3] = "<h4>"
-      elsif markdown.start_with?("###")
-          tag = markdown.split("")
-          tag[0..2] = "<h3>"
-      elsif markdown.start_with?("##")
-          tag = markdown.split("")
-          tag[0..1] = "<h2>"
-      else markdown.start_with?("#")
-          tag = markdown.split("")
-          tag[0] = "<h1>"
+        if  markdown == "####"
+          puts markdown
+            markdown.replace "<h4>"
+      elsif markdown == "###"
+            markdown.replace "<h3>"
+      elsif markdown == "##"
+            markdown.replace "<h2>"
+      elsif markdown == ("#")
+            markdown.replace "<h1>"
+      else  markdown
       end
     end
   end
 
   def collect_closing_head_tag
+
 
   end
 
