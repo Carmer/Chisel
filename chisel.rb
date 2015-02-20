@@ -12,44 +12,45 @@
 
 class Chisel
 
-  attr_reader :document
+  attr_reader   :document
 
   def initialize(document)
-    @document = document
-    find_all_markdown = false
+    @document = document.split("\n")
   end
 
-  def split
-    @document.split(" ")
-  end
-
-  def locate_markdown_and_replace_open_head_tag
-  html_doc =  @document.split.map do |markdown|
-        if  markdown == "####"
-          puts markdown
-            markdown.replace "<h4>"
-      elsif markdown == "###"
-            markdown.replace "<h3>"
-      elsif markdown == "##"
-            markdown.replace "<h2>"
-      elsif markdown == ("#")
-            markdown.replace "<h1>"
-      else  markdown
+  def locate_markdown_and_replace_with_html
+    html_doc = @document.map do |markdown|
+        if  markdown.include? "####"
+            text = markdown.delete"####"
+            text.gsub text, "<h4>#{text}</h4>"
+          elsif markdown.include? "###"
+            text = markdown.delete"###"
+            text.gsub text, "<h3>#{text}</h3>"
+          elsif markdown.include? "##"
+            text = markdown.delete"##"
+            text.gsub text, "<h2>#{text}</h2>"
+          elsif markdown.include? ("#")
+            text = markdown.delete"#"
+            text.gsub text, "<h1>#{text}</h1>"
+          elsif markdown.include? ""
+            text = markdown.delete""
+            text.gsub text, "<p>#{text}</p>"
+        else  markdown
       end
     end
   end
 
-  def collect_closing_head_tag
-
-
-  end
-
-
-
-
 end
 
-
+# chisel = Chisel.new('# My Life in Desserts
+#
+# ## Chapter 1: The Beginning
+#
+# "You just *have* to try the cheesecake," he said. "Ever since it appeared in
+# **Food & Wine** this place')
+#
+#
+# print chisel.split
 # test = Chisel.new.parse('# My Life in Desserts
 #
 # ## Chapter 1: The Beginning
