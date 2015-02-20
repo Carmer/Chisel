@@ -23,7 +23,7 @@ class TestChisel < Minitest::Test
   def test_iterate_array_and_locate_markdown_and_replace_with_html
 
     chisel = Chisel.new("#document of many lines and more lines \n\n and other lines... oooooo yeah")
-    assert_equal ["<h1>document of many lines and more lines </h1>", "<p> and other lines... oooooo yeah</p>"], chisel.locate_markdown_and_replace_with_html
+    assert_equal ["<h1>document of many lines and more lines </h1>", "", "<p> and other lines... oooooo yeah</p>"], chisel.locate_markdown_and_replace_with_html
   end
 
 end

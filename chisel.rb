@@ -20,7 +20,9 @@ class Chisel
 
   def locate_markdown_and_replace_with_html
     html_doc = @document.map do |markdown|
-        if  markdown.include? "####"
+        if  markdown == ""
+            markdown
+          elsif markdown.include? "####"
             text = markdown.delete"####"
             text.gsub text, "<h4>#{text}</h4>"
           elsif markdown.include? "###"
