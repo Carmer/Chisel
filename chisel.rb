@@ -52,41 +52,7 @@ class Chisel
     formatted
     end
 
-
-
   def reassemble
     formatting.join(" ")
   end
-
 end
-
-# chisel = Chisel.new('# My Life in Desserts
-#
-#
-# ## Chapter 1: The Beginning
-#
-# "You just *have* to try the cheesecake," he said. "Ever since it appeared in
-# **Food & Wine** this placehas been packed every night."')
-#  chisel.formatting
-
-#
-#
-# print chisel.split
-# test = Chisel.new.parse('# My Life in Desserts
-#
-# "## Chapter 1: The Beginning
-#
-# "You just *have* to try the cheesecake," he said. "Ever since it appeared in
-# **Food & Wine** this place')
-#
-#
-#
-#
-# <h1>My Life in Desserts</h1>
-#
-# <h2>Chapter 1: The Beginning</h2>
-#
-# <p>
-#   "You just <em>have</em> to try the cheesecake," he said. "Ever since it appeared in
-#   <strong>Food &amp; Wine</strong> this place has been packed every night."
-# </p>"
