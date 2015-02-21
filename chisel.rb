@@ -1,27 +1,20 @@
-# document = '# My Life in Desserts
-#
-# ## Chapter 1: The Beginning
-#
-# "You just *have* to try the cheesecake," he said. "Ever since it appeared in
-# **Food & Wine** this place has been packed every night."'
-#
-# parser = Chisel.new
-# output = parser.parse(document)
-# puts output
-
-
 class Chisel
 
   attr_reader   :document
 
   def initialize(document)
-    @document = document.split("\n")
+    @document = document.split("\n\n")
   end
 
-  def locate_header_and_replace_with_html
+  def locate_markdown_replace_with_html
     html_doc = @document.map do |markdown|
-        if  markdown == ""
-            markdown
+
+        if markdown.include? "######"
+            text = markdown.delete"######"
+            text.gsub text, "<h6>#{text}</h6>"
+          elsif markdown.include? "#####"
+            text = markdown.delete"#####"
+            text.gsub text, "<h5>#{text}</h5>"
           elsif markdown.include? "####"
             text = markdown.delete"####"
             text.gsub text, "<h4>#{text}</h4>"
@@ -40,53 +33,55 @@ class Chisel
         else  markdown
       end
     end
-    html_doc #this is the array by line
+    html_doc
   end
 
   def formatting
-    formatted = locate_header_and_replace_with_html.to_s.split(" ").map do |text|
+    formatted = locate_markdown_replace_with_html.join.split(" ").map do |text|
       if text.include? "**"
-          tag = text.delete"**"
-          tag.gsub tag, "<strong>#{tag}</strong>"
+              tag = text.delete"**"
+              tag.gsub tag, "<strong>#{tag}</strong>"
       elsif text.include? "*"
-          tag = text.delete"*"
-          tag.gsub tag, "<em>#{tag}</em>"
-        elsif text.include? ""
-          text.delete""
-        else
-          text
+              tag = text.delete"*"
+              tag.gsub tag, "<em>#{tag}</em>"
+      elsif text.include? ""
+              text.delete""
+        else text
         end
       end
-      formatted.join(" ") #this the array by line
+    formatted
     end
 
 
 
   def reassemble
-    print formatted.join("\n")
+    formatting.join(" ")
   end
 
 end
 
 # chisel = Chisel.new('# My Life in Desserts
 #
+#
 # ## Chapter 1: The Beginning
 #
 # "You just *have* to try the cheesecake," he said. "Ever since it appeared in
-# **Food & Wine** this place')
+# **Food & Wine** this placehas been packed every night."')
+#  chisel.formatting
+
 #
 #
 # print chisel.split
 # test = Chisel.new.parse('# My Life in Desserts
 #
-# ## Chapter 1: The Beginning
+# "## Chapter 1: The Beginning
 #
 # "You just *have* to try the cheesecake," he said. "Ever since it appeared in
 # **Food & Wine** this place')
 #
 #
 #
-
+#
 # <h1>My Life in Desserts</h1>
 #
 # <h2>Chapter 1: The Beginning</h2>
@@ -94,4 +89,4 @@ end
 # <p>
 #   "You just <em>have</em> to try the cheesecake," he said. "Ever since it appeared in
 #   <strong>Food &amp; Wine</strong> this place has been packed every night."
-# </p>
+# </p>"
